@@ -20,7 +20,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const internalService = new InternalAuthService()
   const authResult = await internalService.authUserToken(req.headers.authorization || '')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
-  res.setHeader('Access-Control-Allow-Origin', '*') // replace this your actual origin
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    req.headers.host?.includes('localhost')
+      ? `http://${req.headers.host}`
+      : `https://${req.headers.host}`
+  ) // replace this your actual origin
   res.setHeader('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
   res.setHeader(
     'Access-Control-Allow-Headers',
