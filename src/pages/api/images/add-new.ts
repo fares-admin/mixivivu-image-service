@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { ImageService } from '@/src/service/image-service/image-service'
 import { InternalAuthService } from '@/src/service/internal-auth-service/internal-auth-service'
+import { wrapperEndpoint } from 'common-abstract-fares-system'
 
 /*
     @ericchen:
@@ -32,8 +34,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (!authResult.success) {
     res.status(200).json(authResult)
   } else {
-    // const service = new ImageService()
-    // const result = await wrapperEndpoint(req, 'POST', service.addNewImage(req))
-    // res.status(200).json(result)
+    const service = new ImageService()
+    const result = await wrapperEndpoint(req, 'POST', service.addNewImage(req))
+    res.status(200).json(result)
   }
 }
