@@ -86,13 +86,13 @@ export const addNewImageFunc = async (
       try {
         const uploadObject = await minioClient.fPutObject(
           String(process.env.MINIO_BUCKET),
-          String(data.files.file[0].originalFilename),
-          String(data?.files?.file[0].filepath)
+          String(item.originalFilename),
+          String(item.filepath)
         )
         if (uploadObject.etag) {
           const entity: Image = {
             ...new Image(),
-            name: String(data.files.file[0].originalFilename),
+            name: String(item.originalFilename),
             belongIds: Array(String(data?.fields?.belongId))
               .filter((item) => item.length > 0 && mongoose.isValidObjectId(item))
               .map((item) => new mongoose.Types.ObjectId(item)),
